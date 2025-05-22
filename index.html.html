@@ -482,7 +482,6 @@
             <button id="acceptDisclaimerBtn" class="btn btn-primary w-full sm:w-auto mx-auto block mt-8 text-lg">Aceptar y Continuar</button>
         </div>
 
-
         <div id="personalDataScreen" class="hidden">
             <div class="question-section-layout">
                 <div class="section-info-column">
@@ -550,7 +549,6 @@
             <p class="text-xl font-league-spartan-black" style="color: var(--color-primary);">Generando reporte...</p>
         </div>
 
-
         <div id="resultsScreen" class="hidden">
             <h1 id="resultsScreenTitle" class="text-4xl font-league-spartan-black text-center mb-8">¡Tus Resultados Están Aquí!</h1>
             <div class="results-grid">
@@ -590,6 +588,9 @@
     </div>
 
     <script>
+        // --- Logo Base64 ---
+        const logoBase64 = "data:image/png;base64,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"; 
+
         // --- Configuration and Data ---
         const quizConfig = {
             loadingDelay: 1500, 
@@ -640,7 +641,7 @@
         };
 
 
-        const quizSections = [ /* ... same as before, ensure 'title' and 'fullTitle' are present ... */ 
+        const quizSections = [
             {
                 title: "Presupuesto", 
                 fullTitle: "Presupuesto - Tu Mapa Financiero Personal",
@@ -683,7 +684,7 @@
                     {
                         id: "ahorro1", text: "¿Dónde guardas principalmente tus ahorros?",
                         options: [
-                            { text: "Ahorro en instituciones financieras reguladas que ofrecen rendimientos.", score: 3 },
+                            { text: "Ahorro en instituciones financieras reguladas che ofrecen rendimientos.", score: 3 },
                             { text: "Solo guardo mi dinero en la cuenta de débito o nómina.", score: 2 },
                             { text: "Ahorro en casa o en métodos informales como \"tandas\".", score: 1 },
                             { text: "No ahorro.", score: 0 }
@@ -847,11 +848,11 @@
             }
         ];
         const resultsLevels = [ 
-            { min: 0, max: 20, title: "Rescate Financiero Urgente", comment: "Tu situación financiera requiere atención inmediata. Es crucial implementar cambios drásticos y buscar ayuda profesional para evitar graves consecuencias. Estás en un punto crítico donde las decisiones que tomes ahora impactarán tu futuro financiero.", recommendation: "Busca asesoría financiera profesional de inmediato. Cursos básicos de finanzas personales, crear presupuesto estricto y eliminar deudas de alto interés.", colorClass: "border-red-500 bg-red-50 text-red-700", barColor: "var(--color-level-1)" },
-            { min: 21, max: 40, title: "Despertar Financiero", comment: "Estás empezando a tomar conciencia de la importancia de tus finanzas, pero aún hay mucho por mejorar. Es momento de adquirir conocimientos y herramientas para tomar el control de tu dinero. Tienes el potencial de mejorar, pero necesitas acción y compromiso.", recommendation: "Aprende sobre presupuestos, ahorro y manejo de deudas. Metas financieras pequeñas y realistas. Explora recursos en línea y talleres/seminarios sobre finanzas personales.", colorClass: "border-orange-500 bg-orange-50 text-orange-700", barColor: "var(--color-level-2)" },
-            { min: 41, max: 60, title: "Camino a la Estabilidad", comment: "Has logrado avances significativos en tus finanzas, pero aún existen áreas de oportunidad. Estás construyendo una base sólida y, con algunos ajustes, puedes alcanzar una mayor estabilidad. Tus esfuerzos están dando frutos, pero la consistencia es clave.", recommendation: "Revisa y ajusta tu presupuesto regularmente. Inversiones a bajo riesgo y fondo de emergencia sólido. Diversifica ahorros y evalúa seguros.", colorClass: "border-yellow-500 bg-yellow-50 text-yellow-700", barColor: "var(--color-level-3)" },
-            { min: 61, max: 80, title: "Potenciando tus Finanzas", comment: "Tienes un buen manejo de tus finanzas y estás en una posición sólida. Ahora es el momento de optimizar tus estrategias y buscar crecimiento financiero. Estás en una fase de crecimiento y refinamiento de tus habilidades financieras.", recommendation: "Inversiones más avanzadas y diversifica tu portafolio. Planifica para el retiro y evalúa tus seguros. Oportunidades para aumentar ingresos y mejorar planificación fiscal.", colorClass: "border-lime-500 bg-lime-50 text-lime-700", barColor: "var(--color-level-4)" }, 
-            { min: 81, max: 100, title: "Maestro Financiero", comment: "Eres un experto en finanzas personales y estás en excelente forma. Tu enfoque disciplinado y estratégico te permitirá alcanzar tus metas financieras con éxito. Eres un modelo a seguir en cuanto a gestión financiera.", recommendation: "Continúa aprendiendo y adaptándote a los cambios del mercado. Mentorizar a otros y compartir tus conocimientos. Estrategias de inversión sofisticadas y planifica la transferencia de patrimonio.", colorClass: "border-green-500 bg-green-50 text-green-700", barColor: "var(--color-level-5)" }
+            { min: 0, max: 20, title: "Rescate Financiero Urgente", comment: "Tu situación financiera requiere atención inmediata. Es crucial implementar cambios drásticos y buscar ayuda profesional para evitar graves consecuencias. Estás en un punto crítico donde las decisiones que tomes ahora impactarán tu futuro financiero.", recommendation: "Busca asesoría financiera profesional de inmediato. Cursos básicos de finanzas personales, crear presupuesto estricto y eliminar deudas de alto interés.", colorClass: "border-red-500 bg-red-50 text-red-700", barColor: "#EF4444" },
+            { min: 21, max: 40, title: "Despertar Financiero", comment: "Estás empezando a tomar conciencia de la importancia de tus finanzas, pero aún hay mucho por mejorar. Es momento de adquirir conocimientos y herramientas para tomar el control de tu dinero. Tienes el potencial de mejorar, pero necesitas acción y compromiso.", recommendation: "Aprende sobre presupuestos, ahorro y manejo de deudas. Metas financieras pequeñas y realistas. Explora recursos en línea y talleres/seminarios sobre finanzas personales.", colorClass: "border-orange-500 bg-orange-50 text-orange-700", barColor: "#F97316" },
+            { min: 41, max: 60, title: "Camino a la Estabilidad", comment: "Has logrado avances significativos en tus finanzas, pero aún existen áreas de oportunidad. Estás construyendo una base sólida y, con algunos ajustes, puedes alcanzar una mayor estabilidad. Tus esfuerzos están dando frutos, pero la consistencia es clave.", recommendation: "Revisa y ajusta tu presupuesto regularmente. Inversiones a bajo riesgo y fondo de emergencia sólido. Diversifica ahorros y evalúa seguros.", colorClass: "border-yellow-500 bg-yellow-50 text-yellow-700", barColor: "#EAB308" },
+            { min: 61, max: 80, title: "Potenciando tus Finanzas", comment: "Tienes un buen manejo de tus finanzas y estás en una posición sólida. Ahora es el momento de optimizar tus estrategias y buscar crecimiento financiero. Estás en una fase de crecimiento y refinamiento de tus habilidades financieras.", recommendation: "Inversiones más avanzadas y diversifica tu portafolio. Planifica para el retiro y evalúa tus seguros. Oportunidades para aumentar ingresos y mejorar planificación fiscal.", colorClass: "border-lime-500 bg-lime-50 text-lime-700", barColor: "#84CC16" }, 
+            { min: 81, max: 100, title: "Maestro Financiero", comment: "Eres un experto en finanzas personales y estás en excelente forma. Tu enfoque disciplinado y estratégico te permitirá alcanzar tus metas financieras con éxito. Eres un modelo a seguir en cuanto a gestión financiera.", recommendation: "Continúa aprendiendo y adaptándote a los cambios del mercado. Mentorizar a otros y compartir tus conocimientos. Estrategias de inversión sofisticadas y planifica la transferencia de patrimonio.", colorClass: "border-green-500 bg-green-50 text-green-700", barColor: "#22C55E" }
         ];
 
         // --- DOM Elements ---
@@ -1138,10 +1139,11 @@
                     const radio = document.createElement('input');
                     radio.type = 'radio';
                     radio.name = question.id; 
-                    radio.value = option.score;
+                    radio.value = option.score; // Store score
+                    radio.dataset.text = option.text; // Store text for PDF
                     radio.id = uniqueId;
                     
-                    if (userAnswers[question.id] !== undefined && userAnswers[question.id] === option.score) {
+                    if (userAnswers[question.id] && userAnswers[question.id].score === option.score) {
                         radio.checked = true;
                         label.classList.add('selected');
                     }
@@ -1156,7 +1158,10 @@
                         });
                         if (radio.checked) {
                             if(label) label.classList.add('selected');
-                            userAnswers[question.id] = parseInt(radio.value); 
+                            userAnswers[question.id] = {
+                                score: parseInt(radio.value),
+                                text: radio.dataset.text 
+                            }; 
                         }
                         updateProgressBar(); 
                     });
@@ -1188,7 +1193,7 @@
                 }
                 section.questions.forEach(question => {
                     if (userAnswers[question.id] !== undefined) {
-                        currentSectionScore += userAnswers[question.id];
+                        currentSectionScore += userAnswers[question.id].score; // Use .score from the answer object
                     }
                 });
                 const maxSectionScore = questionsInSection * 3; 
@@ -1211,6 +1216,8 @@
 
             if (!allAnsweredInSection) {
                 if(selectionErrorEl) selectionErrorEl.classList.remove('hidden');
+                // Consider using a custom modal/message box instead of alert()
+                // For example: showCustomAlert("Por favor, responde todas las preguntas de esta sección.");
                 return;
             }
             if(selectionErrorEl) selectionErrorEl.classList.add('hidden');
@@ -1241,17 +1248,23 @@
 
             if (isNaN(age) || age < 18 || age > 70) { 
                 patrimonialDataForDisplay = { calculatedSuccessfully: false, message: "Por favor, ingresa una edad válida entre 18 y 70 años."};
-                alert(patrimonialDataForDisplay.message); 
+                // Consider using a custom modal/message box instead of alert()
+                // For example: showCustomAlert(patrimonialDataForDisplay.message);
+                console.error(patrimonialDataForDisplay.message);
                 return false;
             }
             if (isNaN(income) || income <= 0) {
                 patrimonialDataForDisplay = { calculatedSuccessfully: false, message: "Por favor, ingresa un ingreso mensual válido."};
-                 alert(patrimonialDataForDisplay.message); 
+                // Consider using a custom modal/message box instead of alert()
+                // For example: showCustomAlert(patrimonialDataForDisplay.message);
+                console.error(patrimonialDataForDisplay.message);
                 return false; 
             }
              if (age <= 26.5) { 
                 patrimonialDataForDisplay = { calculatedSuccessfully: false, message: "La edad debe ser mayor a 26.5 para esta fórmula particular."};
-                alert(patrimonialDataForDisplay.message); 
+                // Consider using a custom modal/message box instead of alert()
+                // For example: showCustomAlert(patrimonialDataForDisplay.message);
+                console.error(patrimonialDataForDisplay.message);
                 return false; 
             }
 
@@ -1298,11 +1311,12 @@
         }
         
         function getBarColorForPercentage(percentage) {
-            if (percentage <= 20) return resultsLevels[0].barColor; 
-            if (percentage <= 40) return resultsLevels[1].barColor; 
-            if (percentage <= 60) return resultsLevels[2].barColor; 
-            if (percentage <= 80) return resultsLevels[3].barColor; 
-            return resultsLevels[4].barColor; 
+            // This function now directly returns the hex color string.
+            if (percentage <= 20) return '#EF4444'; 
+            if (percentage <= 40) return '#F97316'; 
+            if (percentage <= 60) return '#EAB308'; 
+            if (percentage <= 80) return '#84CC16'; 
+            return '#22C55E'; 
         }
         
         function populateResultsLegend() {
@@ -1315,7 +1329,7 @@
 
                 const colorSwatch = document.createElement('div');
                 colorSwatch.classList.add('legend-color-swatch');
-                colorSwatch.style.backgroundColor = level.barColor;
+                colorSwatch.style.backgroundColor = level.barColor; // barColor in resultsLevels now stores the direct hex
                 legendItemDiv.appendChild(colorSwatch);
 
                 const levelText = document.createElement('span');
@@ -1393,7 +1407,7 @@
 
             let finalOverallScore = 0;
             for (const questionId in userAnswers) {
-                if (userAnswers.hasOwnProperty(questionId)) {
+                if (userAnswers.hasOwnProperty(questionId) && userAnswers[questionId].score !== undefined) { 
                     let isQuizQ = false;
                     for(const section of quizSections) {
                         if (section.questions.find(q => q.id === questionId)) {
@@ -1402,7 +1416,7 @@
                         }
                     }
                     if(isQuizQ) {
-                        finalOverallScore += userAnswers[questionId];
+                        finalOverallScore += userAnswers[questionId].score;
                     }
                 }
             }
@@ -1544,131 +1558,288 @@
                 }
             });
             if (!allAnswered && missingFieldName) {
-                 alert(`Por favor, responde la pregunta: "${missingFieldName}"`);
+                // Consider using a custom modal/message box instead of alert()
+                // For example: showCustomAlert(`Por favor, responde la pregunta: "${missingFieldName}"`);
+                console.error(`Por favor, responde la pregunta: "${missingFieldName}"`);
             } else if (!allAnswered) {
-                 alert("Por favor, responde todas las preguntas de datos personales, excepto el nombre que es opcional.");
+                // Consider using a custom modal/message box instead of alert()
+                // For example: showCustomAlert("Por favor, responde todas las preguntas de datos personales, excepto el nombre que es opcional.");
+                console.error("Por favor, responde todas las preguntas de datos personales, excepto el nombre que es opcional.");
             }
             return allAnswered;
         }
 
         function downloadResultsPDF() {
             if (typeof window.jspdf === 'undefined' || typeof window.jspdf.jsPDF === 'undefined') {
-                alert("Error: La biblioteca para generar PDF no está cargada. No se puede descargar el PDF.");
+                console.error("Error: La biblioteca para generar PDF no está cargada. No se puede descargar el PDF.");
                 console.error("jsPDF library is not loaded.");
                 return;
             }
             const { jsPDF } = window.jspdf; 
             const doc = new jsPDF();
-            let yPos = 20;
+            
             const lineSpacing = 7;
             const sectionSpacing = 10;
             const indent = 10;
             const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
             const margin = 15;
             const maxLineWidth = pageWidth - margin * 2;
+            const logoHeight = 15; 
+            const logoWidth = (logoHeight * 320) / 132; 
+            let currentPage = 1;
+            let totalPages = 1; 
+            let yPos; 
+
+            function addHeader(doc, pageNum, totalPagesNum) {
+                try {
+                    if (logoBase64 && logoBase64 !== "PLACEHOLDER_FOR_BASE64_LOGO_STRING" && logoBase64.startsWith("data:image")) {
+                        doc.addImage(logoBase64, 'PNG', margin, 5, logoWidth, logoHeight); 
+                    } else {
+                        console.warn("Logo Base64 string is a placeholder or invalid. Displaying fallback text.");
+                        doc.setFontSize(8).text("Logo no disponible", margin, 10);
+                    }
+                } catch (e) {
+                    console.error("Error adding logo to PDF:", e);
+                    doc.setFontSize(8).text("Logo no disponible", margin, 10); 
+                }
+                // Remove page number text
+                // doc.setFontSize(8).text(`Página ${pageNum} de ${totalPagesNum}`, pageWidth - margin, 10, { align: 'right' });
+            }
+
+            function addFooter(doc, pageNum, totalPagesNum) {
+                const footerY = pageHeight - 25;
+                doc.setLineWidth(0.2);
+                doc.line(margin, footerY - 2, pageWidth - margin, footerY - 2); 
+                doc.setFontSize(8);
+                doc.setTextColor(100); 
+                doc.text("Alan Villegas - Asesor Financiero y de Seguros", margin, footerY + 2);
+                doc.text("alan@arvfinplanner.com.mx", margin, footerY + 2 + lineSpacing * 0.6);
+                doc.text("5520322677 | linktr.ee/arvfinplanner", margin, footerY + 2 + lineSpacing * 1.2);
+                doc.setTextColor(0); 
+            }
             
+            function checkPageBreak(currentY, requiredSpace) {
+                if (currentY + requiredSpace > pageHeight - 30) { 
+                    addFooter(doc, currentPage, "TP"); 
+                    doc.addPage();
+                    currentPage++;
+                    addHeader(doc, currentPage, "TP"); 
+                    return logoHeight + 15; 
+                }
+                return currentY;
+            }
+            
+            addHeader(doc, currentPage, "TP"); 
+            yPos = logoHeight + 20; 
+
             const titleFont = 'Helvetica'; 
             const textFont = 'Helvetica'; 
 
             doc.setFont(titleFont, 'bold'); 
-            doc.setFontSize(18);
+            doc.setFontSize(16); 
             const userNameForPDF = currentPersonalData.nombre ? `, ${currentPersonalData.nombre}` : "";
             doc.text(`Resultados del Test de Finanzas Personales${userNameForPDF}`, pageWidth / 2, yPos, { align: 'center' });
             yPos += sectionSpacing * 1.5;
 
-            doc.setFont(titleFont, 'bold'); 
-            doc.setFontSize(14);
-            doc.text("Datos Personales:", margin, yPos);
-            yPos += lineSpacing;
-            doc.setFont(textFont, 'normal'); 
-            doc.setFontSize(10);
-            personalDataQuestions.forEach(pd => { 
-                if (currentPersonalData[pd.id]) {
-                    const text = `${pd.question}: ${currentPersonalData[pd.id]}`;
-                    const splitText = doc.splitTextToSize(text, maxLineWidth - indent);
-                    doc.text(splitText, margin + indent, yPos);
-                    yPos += splitText.length * (lineSpacing * 0.7) + 2;
-                }
-            });
-            yPos += sectionSpacing;
+            const columnWidth = (maxLineWidth - 10) / 2; 
+            const leftColumnX = margin;
+            const rightColumnX = margin + columnWidth + 10;
+            let yPosLeft = yPos;
+            let yPosRight = yPos;
 
             doc.setFont(titleFont, 'bold');
-            doc.setFontSize(14);
-            doc.text("Resultados Generales del Test:", margin, yPos); 
-            yPos += lineSpacing;
-            doc.setFont(textFont, 'normal');
             doc.setFontSize(12);
-            if (scorePercentageEl) { 
-                 doc.text(`Resultado General: ${scorePercentageEl.textContent}`, margin + indent, yPos);
-            }
-            yPos += lineSpacing;
+            doc.setFillColor(134, 51, 153); 
+            doc.setTextColor(255, 255, 255);
+            doc.rect(leftColumnX, yPosLeft - 4, columnWidth, 10, 'F');
+            doc.text("Resultados por módulos", leftColumnX + columnWidth / 2, yPosLeft + 2, { align: 'center' });
+            yPosLeft += 12;
+            doc.setTextColor(0,0,0); 
 
-            doc.setFont(titleFont, 'bold');
-            doc.setFontSize(11);
-            if (resultsTitleEl) doc.text(`Nivel Financiero: ${resultsTitleEl.textContent}`, margin + indent, yPos);
-            yPos += lineSpacing;
-            
-            doc.setFont(textFont, 'normal');
-            if (resultsCommentEl) {
-                const commentText = doc.splitTextToSize(`Comentario: ${resultsCommentEl.textContent}`, maxLineWidth - indent);
-                doc.text(commentText, margin + indent, yPos);
-                yPos += commentText.length * (lineSpacing * 0.7) + 2;
-            }
-            
-            doc.setFont(textFont, 'bold');
-            if (resultsRecommendationEl) {
-                const recommendationTextContent = resultsRecommendationEl.textContent.startsWith("Recomendación: ") ? resultsRecommendationEl.textContent : `Recomendación: ${resultsRecommendationEl.textContent}`;
-                const recommendationText = doc.splitTextToSize(recommendationTextContent, maxLineWidth - indent);
-                doc.text(recommendationText, margin + indent, yPos);
-                yPos += recommendationText.length * (lineSpacing * 0.7) + sectionSpacing;
-            }
-
-            doc.setFont(titleFont, 'bold');
-            doc.setFontSize(14);
-            doc.text("Resultados por Módulo:", margin, yPos);
-            yPos += lineSpacing;
-            doc.setFont(textFont, 'normal');
-            doc.setFontSize(10);
             quizSections.forEach(section => {
+                yPosLeft = checkPageBreak(yPosLeft, 12); 
                 const percentage = sectionScores[section.title] !== undefined ? sectionScores[section.title] : 0;
-                const text = `${section.title}: ${percentage.toFixed(0)}%`;
-                doc.text(text, margin + indent, yPos);
-                yPos += lineSpacing * 0.9;
+                const barColorHex = getBarColorForPercentage(percentage);
+                
+                const barHeight = 5; 
+                const textYOffset = barHeight / 2 + 1.5; 
+
+                doc.setFont(textFont, 'normal').setFontSize(9);
+                doc.text(section.title, leftColumnX, yPosLeft + textYOffset); 
+                
+                const barX = leftColumnX + 40; 
+                const barW = columnWidth - 55;  
+                const filledBarW = (barW * percentage) / 100;
+
+                doc.setFillColor(226, 232, 240); 
+                doc.rect(barX, yPosLeft, barW, barHeight, 'F'); 
+                
+                if (typeof barColorHex === 'string' && barColorHex.startsWith('#')) {
+                    doc.setFillColor(barColorHex); 
+                } else {
+                    doc.setFillColor("#cccccc"); 
+                    console.warn("Invalid barColorHex:", barColorHex, "for section:", section.title);
+                }
+                doc.rect(barX, yPosLeft, filledBarW, barHeight, 'F');
+                
+                doc.setFontSize(8).setTextColor(50,50,50);
+                doc.text(`${percentage.toFixed(0)}%`, barX + barW + 3, yPosLeft + textYOffset); 
+                yPosLeft += 12; 
             });
-            yPos += sectionSpacing;
 
+            yPosRight = checkPageBreak(yPosRight, 60); 
+            doc.setFont(textFont, 'normal').setFontSize(10);
+            doc.setTextColor(74, 85, 104); 
+            doc.text("Tu resultado general es:", rightColumnX + columnWidth / 2, yPosRight, { align: 'center' });
+            yPosRight += 8;
 
+            const overallPercentage = parseFloat(scorePercentageEl.textContent);
+            const overallLevelColorHex = getBarColorForPercentage(overallPercentage);
+            
+            if (typeof overallLevelColorHex === 'string' && overallLevelColorHex.startsWith('#')) {
+                 doc.setFillColor(overallLevelColorHex);
+            } else {
+                doc.setFillColor("#cccccc"); 
+                console.warn("Invalid overallLevelColorHex:", overallLevelColorHex);
+            }
+            
+            const boxSize = 20;
+            doc.rect(rightColumnX + columnWidth/2 - boxSize/2, yPosRight, boxSize, boxSize, 'F');
+            doc.setFont(titleFont, 'bold').setFontSize(18).setTextColor(255,255,255);
+            doc.text(`${overallPercentage.toFixed(0)}%`, rightColumnX + columnWidth / 2, yPosRight + boxSize/2 + 3, { align: 'center' });
+            yPosRight += boxSize + 10;
+            doc.setTextColor(0,0,0);
+
+            if (resultsTitleEl) {
+                doc.setFont(titleFont, 'bold').setFontSize(12);
+                const titleText = doc.splitTextToSize(resultsTitleEl.textContent, columnWidth);
+                doc.text(titleText, rightColumnX, yPosRight);
+                yPosRight += titleText.length * lineSpacing * 0.8;
+            }
+            if (resultsCommentEl) {
+                doc.setFont(textFont, 'normal').setFontSize(9);
+                const commentText = doc.splitTextToSize(resultsCommentEl.textContent, columnWidth);
+                doc.text(commentText, rightColumnX, yPosRight);
+                yPosRight += commentText.length * (lineSpacing * 0.7) + 2;
+            }
+            if (resultsRecommendationEl) {
+                doc.setFont(textFont, 'bold').setFontSize(9);
+                const recText = doc.splitTextToSize(resultsRecommendationEl.textContent, columnWidth);
+                doc.text(recText, rightColumnX, yPosRight);
+                yPosRight += recText.length * (lineSpacing * 0.7);
+            }
+
+            yPos = Math.max(yPosLeft, yPosRight) + sectionSpacing; 
+
+            yPos = checkPageBreak(yPos, 60); 
             if (patrimonialDataForDisplay && patrimonialDataForDisplay.calculatedSuccessfully) { 
-                doc.setFont(titleFont, 'bold');
-                doc.setFontSize(14);
-                doc.text("Análisis de Objetivo Patrimonial:", margin, yPos); 
-                yPos += lineSpacing;
-                doc.setFont(textFont, 'normal');
-                doc.setFontSize(10);
+                doc.setFont(titleFont, 'bold').setFontSize(12);
+                doc.setFillColor(134, 51, 153); 
+                doc.setTextColor(255,255,255);
+                doc.rect(margin, yPos - 4, maxLineWidth, 10, 'F'); 
+                doc.text("Análisis de Objetivo Patrimonial", margin + maxLineWidth/2, yPos + 2, {align: 'center'}); 
+                
+                yPos += 18; // Increased space after purple bar title
+                doc.setTextColor(0,0,0);
 
-                const ageIncomeText = `Para una edad de ${patrimonialDataForDisplay.ageUsed} años, un ingreso mensual de $${patrimonialDataForDisplay.incomeUsed.toLocaleString('es-MX', {minimumFractionDigits: 0, maximumFractionDigits: 0})} MXN y una tasa de inversión del ${(patrimonialDataForDisplay.interestRateUsed * 100).toFixed(0)}%:`;
-                const splitAgeIncome = doc.splitTextToSize(ageIncomeText, maxLineWidth - indent);
-                doc.text(splitAgeIncome, margin + indent, yPos);
-                yPos += splitAgeIncome.length * (lineSpacing * 0.7) +2;
+                doc.setFont(titleFont, 'bold').setFontSize(22).setTextColor(231, 0, 76); 
+                const numeroMagicoText = patrimonialDataForDisplay.objective.split(': $')[1];
+                doc.text(numeroMagicoText, pageWidth / 2, yPos, { align: 'center' }); 
+                yPos += 8; 
 
-                const objectivePDFText = doc.splitTextToSize(patrimonialDataForDisplay.objective, maxLineWidth - indent);
-                doc.text(objectivePDFText, margin + indent, yPos);
-                yPos += objectivePDFText.length * (lineSpacing * 0.7) + 2;
+                doc.setFont(textFont, 'normal').setFontSize(10).setTextColor(85,85,85);
+                doc.text("Tu patrimonio mínimo recomendado es:", pageWidth / 2, yPos, { align: 'center' }); 
+                yPos += 10; 
+                
+                doc.setFont(textFont, 'normal').setFontSize(9);
+                const introText = `Basado en una edad de ${patrimonialDataForDisplay.ageUsed} años, un ingreso mensual de $${patrimonialDataForDisplay.incomeUsed.toLocaleString('es-MX', {minimumFractionDigits: 0, maximumFractionDigits: 0})} MXN y una tasa de inversión del ${(patrimonialDataForDisplay.interestRateUsed * 100).toFixed(0)}%:`;
+                const splitIntro = doc.splitTextToSize(introText, maxLineWidth);
+                doc.text(splitIntro, margin, yPos);
+                yPos += splitIntro.length * (lineSpacing * 0.7) + 2;
                 
                 if (patrimonialDataForDisplay.pureSavings) {
-                    const pureSavingsPDFText = doc.splitTextToSize(patrimonialDataForDisplay.pureSavings, maxLineWidth - indent);
-                    doc.text(pureSavingsPDFText, margin + indent, yPos);
+                    const pureSavingsPDFText = doc.splitTextToSize(patrimonialDataForDisplay.pureSavings, maxLineWidth);
+                    doc.text(pureSavingsPDFText, margin, yPos);
                     yPos += pureSavingsPDFText.length * (lineSpacing * 0.7) + 2;
                 }
                 if (patrimonialDataForDisplay.investmentSavings) {
-                    const investmentSavingsPDFText = doc.splitTextToSize(patrimonialDataForDisplay.investmentSavings, maxLineWidth - indent);
-                    doc.text(investmentSavingsPDFText, margin + indent, yPos);
+                    const investmentSavingsPDFText = doc.splitTextToSize(patrimonialDataForDisplay.investmentSavings, maxLineWidth);
+                    doc.text(investmentSavingsPDFText, margin, yPos);
                     yPos += investmentSavingsPDFText.length * (lineSpacing * 0.7) + 2;
                 }
-                yPos += lineSpacing;
-                doc.setFontSize(8);
-                doc.text("Nota: El cálculo patrimonial es una estimación referencial.", margin + indent, yPos);
+                doc.setFontSize(8).setTextColor(100);
+                doc.text("Nota: El cálculo patrimonial es una estimación referencial. Para una planificación más detallada, te recomendamos hablar con un asesor financiero.", margin, yPos);
+                yPos += sectionSpacing;
             }
+
+            yPos = checkPageBreak(yPos, 50);
+            doc.setFont(titleFont, 'bold').setFontSize(12);
+            doc.setFillColor(134, 51, 153); 
+            doc.setTextColor(255,255,255);
+            doc.rect(margin, yPos - 4, maxLineWidth, 10, 'F');
+            doc.text("Guía de Niveles y Colores", margin + maxLineWidth/2, yPos + 2, {align: 'center'});
+            yPos += 12;
+            doc.setTextColor(0,0,0);
+
+            doc.setFont(textFont, 'normal').setFontSize(9);
+            resultsLevels.forEach(level => {
+                yPos = checkPageBreak(yPos, 10);
+                const barColorHex = level.barColor; 
+                if (typeof barColorHex === 'string' && barColorHex.startsWith('#')) {
+                    doc.setFillColor(barColorHex);
+                } else {
+                    doc.setFillColor("#cccccc"); 
+                     console.warn("Invalid barColorHex for legend:", barColorHex, "for level:", level.title);
+                }
+                doc.rect(margin, yPos, 5, 5, 'F');
+                doc.text(`${level.title} (${level.min}% - ${level.max}%)`, margin + 8, yPos + 4);
+                yPos += 8;
+            });
+            yPos += sectionSpacing;
+
+            yPos = checkPageBreak(yPos, 20 + sectionSpacing * 1.5); 
+
+            doc.setFont(titleFont, 'bold');
+            doc.setFontSize(16);
+            doc.text("Resumen de Tus Respuestas", pageWidth / 2, yPos, { align: 'center' });
+            yPos += sectionSpacing * 1.5;
+
+            quizSections.forEach(section => {
+                yPos = checkPageBreak(yPos, 20); 
+                doc.setFont(titleFont, 'bold');
+                doc.setFontSize(12);
+                const sectionTitleText = doc.splitTextToSize(section.fullTitle, maxLineWidth);
+                doc.text(sectionTitleText, margin, yPos);
+                yPos += sectionTitleText.length * (lineSpacing * 0.8) + (lineSpacing * 0.5);
+
+                doc.setFont(textFont, 'normal');
+                doc.setFontSize(10);
+                section.questions.forEach(question => {
+                    yPos = checkPageBreak(yPos, 15); 
+                    const qText = `P: ${question.text}`;
+                    const splitQText = doc.splitTextToSize(qText, maxLineWidth);
+                    doc.text(splitQText, margin, yPos);
+                    yPos += splitQText.length * (lineSpacing * 0.7);
+
+                    const userAnswerObj = userAnswers[question.id];
+                    const answerText = userAnswerObj && userAnswerObj.text ? `R: ${userAnswerObj.text}` : "R: No respondida";
+                    const splitAText = doc.splitTextToSize(answerText, maxLineWidth - indent);
+                    doc.setTextColor(85, 85, 85); 
+                    doc.text(splitAText, margin + indent, yPos);
+                    doc.setTextColor(0, 0, 0); 
+                    yPos += splitAText.length * (lineSpacing * 0.7) + (lineSpacing * 0.3);
+                });
+                yPos += lineSpacing; 
+            });
+
+            totalPages = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= totalPages; i++) {
+                doc.setPage(i);
+                addHeader(doc, i, totalPages); 
+                addFooter(doc, i, totalPages);
+            }
+
             doc.save("Resultados_Test_Finanzas_Personales.pdf");
         }
 
@@ -1712,7 +1883,7 @@
             const investorProfileSelected = investorProfileQuestionContainerEl.querySelector(`input[name="${investorProfileQuestion.id}"]:checked`);
             if (!investorProfileSelected) {
                 if(investorProfileErrorEl) investorProfileErrorEl.classList.remove('hidden');
-                alert("Por favor, selecciona tu perfil de inversionista.");
+                console.error("Por favor, selecciona tu perfil de inversionista.");
                 return;
             }
             if(investorProfileErrorEl) investorProfileErrorEl.classList.add('hidden');
