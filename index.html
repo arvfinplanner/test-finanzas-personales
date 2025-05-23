@@ -1620,16 +1620,16 @@
             
             function checkPageBreak(currentY, requiredSpace) {
                 if (currentY + requiredSpace > pageHeight - 30) { 
-                    addFooter(doc, currentPage, "TP"); // "TP" will be replaced later
+                    addFooter(doc, currentPage, "TP"); 
                     doc.addPage();
                     currentPage++;
-                    addHeader(doc, currentPage, "TP"); // "TP" will be replaced later
+                    addHeader(doc, currentPage, "TP"); 
                     return logoHeight + 15; 
                 }
                 return currentY;
             }
             
-            addHeader(doc, currentPage, "TP");  // "TP" will be replaced later
+            addHeader(doc, currentPage, "TP"); 
             yPos = logoHeight + 20; 
 
             const titleFont = 'Helvetica'; 
@@ -1835,20 +1835,13 @@
             totalPages = doc.internal.getNumberOfPages();
             for (let i = 1; i <= totalPages; i++) {
                 doc.setPage(i);
-                addHeader(doc, i, totalPages); // Add header to all pages
-                addFooter(doc, i, totalPages); // Add footer to all pages
+                addHeader(doc, i, totalPages); 
+                addFooter(doc, i, totalPages);
             }
             
-            // Instead of doc.save, get data URI and post message to parent
-            const pdfDataUri = doc.output('datauristring');
-            const message = {
-                type: 'pdfData',
-                dataUri: pdfDataUri,
-                filename: 'Resultados_Test_Finanzas_Personales.pdf'
-            };
-            // Domain updated to the one provided by the user
-            window.parent.postMessage(message, 'https://www.arvfinplanner.com.mx'); 
-            console.log("PDF data sent to parent window.");
+            // This version is for direct download, suitable for Wix or direct hosting.
+            doc.save("Resultados_Test_Finanzas_Personales.pdf");
+            console.log("PDF download initiated directly.");
         }
 
         // --- Event Listeners ---
