@@ -1603,7 +1603,8 @@
                     console.error("Error adding logo to PDF:", e);
                     doc.setFontSize(8).text("Logo no disponible", margin, 10); 
                 }
-                // Page numbers removed as per user request
+                // Remove page number text
+                // doc.setFontSize(8).text(`Página ${pageNum} de ${totalPagesNum}`, pageWidth - margin, 10, { align: 'right' });
             }
 
             function addFooter(doc, pageNum, totalPagesNum) {
@@ -1739,7 +1740,7 @@
                 doc.rect(margin, yPos - 4, maxLineWidth, 10, 'F'); 
                 doc.text("Análisis de Objetivo Patrimonial", margin + maxLineWidth/2, yPos + 2, {align: 'center'}); 
                 
-                yPos += 18; 
+                yPos += 18; // Increased space after purple bar title
                 doc.setTextColor(0,0,0);
 
                 doc.setFont(titleFont, 'bold').setFontSize(22).setTextColor(231, 0, 76); 
@@ -1838,10 +1839,8 @@
                 addHeader(doc, i, totalPages); 
                 addFooter(doc, i, totalPages);
             }
-            
-            // This version is for direct download, suitable for Wix or direct hosting.
+
             doc.save("Resultados_Test_Finanzas_Personales.pdf");
-            console.log("PDF download initiated directly.");
         }
 
         // --- Event Listeners ---
@@ -1924,4 +1923,4 @@
 
     </script>
 </body>
-</html>
+</ht
