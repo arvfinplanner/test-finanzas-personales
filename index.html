@@ -1603,8 +1603,7 @@
                     console.error("Error adding logo to PDF:", e);
                     doc.setFontSize(8).text("Logo no disponible", margin, 10); 
                 }
-                // Remove page number text
-                // doc.setFontSize(8).text(`Página ${pageNum} de ${totalPagesNum}`, pageWidth - margin, 10, { align: 'right' });
+                // Page numbers removed as per user request
             }
 
             function addFooter(doc, pageNum, totalPagesNum) {
@@ -1621,16 +1620,16 @@
             
             function checkPageBreak(currentY, requiredSpace) {
                 if (currentY + requiredSpace > pageHeight - 30) { 
-                    addFooter(doc, currentPage, "TP"); 
+                    addFooter(doc, currentPage, "TP"); // "TP" will be replaced later
                     doc.addPage();
                     currentPage++;
-                    addHeader(doc, currentPage, "TP"); 
+                    addHeader(doc, currentPage, "TP"); // "TP" will be replaced later
                     return logoHeight + 15; 
                 }
                 return currentY;
             }
             
-            addHeader(doc, currentPage, "TP"); 
+            addHeader(doc, currentPage, "TP");  // "TP" will be replaced later
             yPos = logoHeight + 20; 
 
             const titleFont = 'Helvetica'; 
@@ -1740,7 +1739,7 @@
                 doc.rect(margin, yPos - 4, maxLineWidth, 10, 'F'); 
                 doc.text("Análisis de Objetivo Patrimonial", margin + maxLineWidth/2, yPos + 2, {align: 'center'}); 
                 
-                yPos += 18; // Increased space after purple bar title
+                yPos += 18; 
                 doc.setTextColor(0,0,0);
 
                 doc.setFont(titleFont, 'bold').setFontSize(22).setTextColor(231, 0, 76); 
@@ -1836,11 +1835,20 @@
             totalPages = doc.internal.getNumberOfPages();
             for (let i = 1; i <= totalPages; i++) {
                 doc.setPage(i);
-                addHeader(doc, i, totalPages); 
-                addFooter(doc, i, totalPages);
+                addHeader(doc, i, totalPages); // Add header to all pages
+                addFooter(doc, i, totalPages); // Add footer to all pages
             }
-
-            doc.save("Resultados_Test_Finanzas_Personales.pdf");
+            
+            // Instead of doc.save, get data URI and post message to parent
+            const pdfDataUri = doc.output('datauristring');
+            const message = {
+                type: 'pdfData',
+                dataUri: pdfDataUri,
+                filename: 'Resultados_Test_Finanzas_Personales.pdf'
+            };
+            // Domain updated to the one provided by the user
+            window.parent.postMessage(message, 'https://www.arvfinplanner.com.mx'); 
+            console.log("PDF data sent to parent window.");
         }
 
         // --- Event Listeners ---
@@ -1923,4 +1931,4 @@
 
     </script>
 </body>
-</ht
+</html>
