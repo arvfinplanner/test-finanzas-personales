@@ -491,6 +491,7 @@
                 <div id="personalDataQuestionsContainer">
                     </div>
             </div>
+            <p id="personalDataError" class="text-red-500 text-sm mt-4 text-center hidden"></p>
             <div class="navigation-buttons flex flex-col sm:flex-row justify-between items-center mt-8">
                  <button id="backBtnPersonalData" class="btn btn-secondary"> &lt; Regresar</button>
                 <button id="startMainQuizBtn" class="btn btn-primary">Continuar al Test</button>
@@ -596,28 +597,96 @@
             loadingDelay: 1500, 
         };
 
-        const personalDataQuestions = [ 
-             {
-                id: "nombre", question: "¿Cuál es tu nombre?", type: "text", name: "nombre", placeholder: "Escribe tu nombre aquí"
+        const personalDataQuestions = [
+            {
+                id: "nombre",
+                question: "¿Cuál es tu nombre?",
+                type: "text",
+                name: "nombre",
+                placeholder: "Escribe tu nombre aquí"
             },
             {
-                id: "edad", question: "¿Cuántos años tienes?", type: "radio", name: "edad",
+                id: "edad",
+                question: "¿Cuántos años tienes?",
+                type: "radio",
+                name: "edad",
                 options: ["18 a 24 años", "25 a 34 años", "35 a 44 años", "45 a 54 años", "55 años o más"]
             },
             {
-                id: "dependientes", question: "¿Tienes dependientes económicos?", type: "radio", name: "dependientes",
+                id: "estadoCivil",
+                question: "¿Cuál es tu estado civil?",
+                type: "radio",
+                name: "estadoCivil",
+                options: ["Soltero(a)", "Casado(a)", "Divorciado(a)", "Viudo(a)", "Unión libre"]
+            },
+            {
+                id: "dependientes",
+                question: "¿Tienes dependientes económicos?",
+                type: "radio",
+                name: "dependientes",
                 options: ["Sí", "No"]
             },
             {
-                id: "vivienda", question: "¿Vives en casa propia o rentada?", type: "radio", name: "vivienda",
+                id: "vidaLaboral",
+                question: "¿Hace cuánto tiempo iniciaste tu vida laboral (años)?",
+                type: "number",
+                name: "vidaLaboral",
+                placeholder: "Ej: 5"
+            },
+            {
+                id: "ocupacion",
+                question: "¿Cuál es tu ocupación laboral principal?",
+                type: "radio",
+                name: "ocupacion",
+                options: ["Empleado(a) por cuenta ajena", "Trabajador(a) independiente/Freelancer", "Empresario(a)", "Estudiante", "Jubilado(a)", "Otro (especificar)"]
+            },
+            {
+                id: "otraFuenteIngreso",
+                question: "¿Además de tu trabajo, hay otra fuente de ingreso familiar?",
+                type: "radio",
+                name: "otraFuenteIngreso",
+                options: ["Sí (especificar)", "No"]
+            },
+            {
+                id: "rangoIngresos",
+                question: "¿Cuál es tu rango de ingresos mensuales aproximado?",
+                type: "radio",
+                name: "rangoIngresos",
+                options: ["Menos de $20,000 MXN", "$20,001-$30,000 MXN", "$30,001-$50,000 MXN", "$50,001-$100,000 MXN", "Más de $100,000 MXN"]
+            },
+            {
+                id: "vivienda",
+                question: "¿Vives en casa propia o rentada?",
+                type: "radio",
+                name: "vivienda",
                 options: ["Propia", "Rentada"]
             },
             {
-                id: "transporte", question: "¿Qué tipo de transporte utilizas?", type: "radio", name: "transporte",
+                id: "transporte",
+                question: "¿Qué tipo de transporte utilizas?",
+                type: "radio",
+                name: "transporte",
                 options: ["Auto propio", "Transporte público", "Otro"]
             },
             {
-                id: "preocupacion", question: "¿Cuál es tu principal preocupación respecto al dinero?", type: "radio", name: "preocupacion",
+                id: "fondoEmergencia",
+                question: "¿Tienes un fondo de emergencia?",
+                type: "radio",
+                name: "fondoEmergencia",
+                options: ["Sí, suficiente para al menos 6 meses de gastos.", "Sí, pero no suficiente para 6 meses.", "No, no tengo un fondo de emergencia."]
+            },
+            {
+                id: "deudas",
+                question: "¿Tienes deudas actualmente (tarjetas de crédito, préstamos, etc.)?",
+                type: "radio",
+                name: "deudas",
+                options: ["No, no tengo deudas.", "Sí, deudas menores y controladas.", "Sí, deudas importantes que me preocupan."]
+            },
+            {
+                id: "preocupacion",
+                question: "¿Cuál es tu principal preocupación respecto al dinero?",
+                type: "radio",
+                name: "preocupacion",
                 options: [
                     "Me preocupa no tener un control claro de mis ingresos y gastos.",
                     "Me preocupa no estar ahorrando lo suficiente para mis metas.",
@@ -626,6 +695,13 @@
                     "Me preocupa no estar preparado financieramente para mi retiro.",
                     "Me preocupa no tener la protección adecuada en caso de imprevistos."
                 ]
+            },
+            {
+                id: "conocimientosFinancieros",
+                question: "¿Cómo calificarías tus conocimientos sobre finanzas personales?",
+                type: "radio",
+                name: "conocimientosFinancieros",
+                options: ["Muy alto", "Alto", "Medio", "Bajo", "Muy bajo"]
             }
         ];
 
@@ -684,7 +760,7 @@
                     {
                         id: "ahorro1", text: "¿Dónde guardas principalmente tus ahorros?",
                         options: [
-                            { text: "Ahorro en instituciones financieras reguladas che ofrecen rendimientos.", score: 3 },
+                            { text: "Ahorro en instituciones financieras reguladas que ofrecen rendimientos.", score: 3 },
                             { text: "Solo guardo mi dinero en la cuenta de débito o nómina.", score: 2 },
                             { text: "Ahorro en casa o en métodos informales como \"tandas\".", score: 1 },
                             { text: "No ahorro.", score: 0 }
@@ -878,6 +954,7 @@
         const acceptDisclaimerBtnEl = document.getElementById('acceptDisclaimerBtn'); 
         const startMainQuizBtn = document.getElementById('startMainQuizBtn');
         const personalDataQuestionsContainer = document.getElementById('personalDataQuestionsContainer');
+        const personalDataErrorEl = document.getElementById('personalDataError');
         const backBtnPersonalDataEl = document.getElementById('backBtnPersonalData'); 
 
         
@@ -976,34 +1053,40 @@
 
         function loadPersonalDataQuestions() {
             if (!personalDataQuestionsContainer) return;
-            personalDataQuestionsContainer.innerHTML = ''; 
+            personalDataQuestionsContainer.innerHTML = '';
             const formFragment = document.createDocumentFragment();
-            personalDataQuestions.forEach((pdQuestion) => { 
+
+            personalDataQuestions.forEach((pdQuestion) => {
                 const qDiv = document.createElement('div');
                 qDiv.classList.add('mb-6');
-                
-                const qLabel = document.createElement('label'); 
+
+                const qLabel = document.createElement('label');
                 qLabel.classList.add('block', 'text-md', 'font-semibold', 'mb-1', 'text-gray-700');
                 qLabel.style.fontFamily = 'var(--font-text)';
                 qLabel.textContent = pdQuestion.question;
-                if (pdQuestion.type === 'text') {
+                if (pdQuestion.type === 'text' || pdQuestion.type === 'number') {
                     qLabel.htmlFor = pdQuestion.id;
                 }
                 qDiv.appendChild(qLabel);
 
-                if (pdQuestion.type === 'text') {
+                if (pdQuestion.type === 'text' || pdQuestion.type === 'number') {
                     const input = document.createElement('input');
-                    input.type = 'text';
+                    input.type = pdQuestion.type;
                     input.name = pdQuestion.name;
                     input.id = pdQuestion.id;
                     input.placeholder = pdQuestion.placeholder || '';
                     input.classList.add('input-field', 'shadow-sm');
-                    input.value = currentPersonalData[pdQuestion.id] || ''; 
-                    input.addEventListener('input', (e) => { // Changed to input for real-time update
+                    if (pdQuestion.type === 'number') {
+                        input.min = "0";
+                    }
+                    input.value = currentPersonalData[pdQuestion.id] || '';
+                    input.addEventListener('input', (e) => {
                         currentPersonalData[pdQuestion.id] = e.target.value.trim();
                     });
                     qDiv.appendChild(input);
                 } else if (pdQuestion.type === 'radio') {
+                    const hasSpecifyOption = pdQuestion.options.some(opt => opt.includes('(especificar)'));
+                    
                     pdQuestion.options.forEach(optionText => {
                         const uniqueId = `${pdQuestion.name}_${optionText.replace(/\s+/g, '_').replace(/[¿?"'.!,]/g, '')}`;
                         const optionWrapper = document.createElement('label');
@@ -1011,12 +1094,11 @@
                         optionWrapper.htmlFor = uniqueId;
 
                         const radio = document.createElement('input');
-                        radio.type = pdQuestion.type;
-                        radio.name = pdQuestion.name; 
+                        radio.type = 'radio';
+                        radio.name = pdQuestion.name;
                         radio.value = optionText;
-                        radio.required = true;
                         radio.id = uniqueId;
-                        radio.classList.add('mr-3'); 
+                        radio.classList.add('mr-3');
 
                         if (currentPersonalData[pdQuestion.id] === optionText) {
                             radio.checked = true;
@@ -1029,14 +1111,57 @@
 
                         radio.addEventListener('change', () => {
                             document.querySelectorAll(`input[name="${pdQuestion.name}"]`).forEach(r => {
-                                if(r.parentElement) r.parentElement.classList.remove('selected');
+                                r.parentElement.classList.remove('selected');
                             });
-                            if (radio.checked) {
-                                if(optionWrapper) optionWrapper.classList.add('selected');
-                                currentPersonalData[pdQuestion.id] = radio.value; 
+                            optionWrapper.classList.add('selected');
+                            currentPersonalData[pdQuestion.id] = radio.value;
+
+                            if (hasSpecifyOption) {
+                                const specifyWrapper = document.getElementById(`${pdQuestion.id}_specify_wrapper`);
+                                if (radio.value.includes('(especificar)')) {
+                                    specifyWrapper.classList.remove('hidden');
+                                } else {
+                                    specifyWrapper.classList.add('hidden');
+                                    const specifyInput = document.getElementById(`${pdQuestion.id}_specify_text`);
+                                    specifyInput.value = '';
+                                    delete currentPersonalData[`${pdQuestion.id}_specify`];
+                                }
                             }
                         });
                     });
+                    
+                    if (hasSpecifyOption) {
+                        const specifyWrapper = document.createElement('div');
+                        specifyWrapper.id = `${pdQuestion.id}_specify_wrapper`;
+                        specifyWrapper.classList.add('mt-2');
+                        if (currentPersonalData[pdQuestion.id] && currentPersonalData[pdQuestion.id].includes('(especificar)')) {
+                            // is visible
+                        } else {
+                            specifyWrapper.classList.add('hidden');
+                        }
+
+
+                        const specifyLabel = document.createElement('label');
+                        specifyLabel.htmlFor = `${pdQuestion.id}_specify_text`;
+                        specifyLabel.textContent = "Por favor, especifica:";
+                        specifyLabel.classList.add('text-sm', 'font-medium', 'text-gray-600');
+                        
+                        const specifyInput = document.createElement('input');
+                        specifyInput.type = 'text';
+                        specifyInput.id = `${pdQuestion.id}_specify_text`;
+                        specifyInput.name = `${pdQuestion.id}_specify_text`;
+                        specifyInput.classList.add('input-field', 'mt-1');
+                        specifyInput.value = currentPersonalData[`${pdQuestion.id}_specify`] || '';
+
+
+                        specifyInput.addEventListener('input', (e) => {
+                             currentPersonalData[`${pdQuestion.id}_specify`] = e.target.value.trim();
+                        });
+
+                        specifyWrapper.appendChild(specifyLabel);
+                        specifyWrapper.appendChild(specifyInput);
+                        qDiv.appendChild(specifyWrapper);
+                    }
                 }
                 formFragment.appendChild(qDiv);
             });
@@ -1139,8 +1264,8 @@
                     const radio = document.createElement('input');
                     radio.type = 'radio';
                     radio.name = question.id; 
-                    radio.value = option.score; // Store score
-                    radio.dataset.text = option.text; // Store text for PDF
+                    radio.value = option.score;
+                    radio.dataset.text = option.text;
                     radio.id = uniqueId;
                     
                     if (userAnswers[question.id] && userAnswers[question.id].score === option.score) {
@@ -1193,7 +1318,7 @@
                 }
                 section.questions.forEach(question => {
                     if (userAnswers[question.id] !== undefined) {
-                        currentSectionScore += userAnswers[question.id].score; // Use .score from the answer object
+                        currentSectionScore += userAnswers[question.id].score;
                     }
                 });
                 const maxSectionScore = questionsInSection * 3; 
@@ -1216,8 +1341,6 @@
 
             if (!allAnsweredInSection) {
                 if(selectionErrorEl) selectionErrorEl.classList.remove('hidden');
-                // Consider using a custom modal/message box instead of alert()
-                // For example: showCustomAlert("Por favor, responde todas las preguntas de esta sección.");
                 return;
             }
             if(selectionErrorEl) selectionErrorEl.classList.add('hidden');
@@ -1248,22 +1371,16 @@
 
             if (isNaN(age) || age < 18 || age > 70) { 
                 patrimonialDataForDisplay = { calculatedSuccessfully: false, message: "Por favor, ingresa una edad válida entre 18 y 70 años."};
-                // Consider using a custom modal/message box instead of alert()
-                // For example: showCustomAlert(patrimonialDataForDisplay.message);
                 console.error(patrimonialDataForDisplay.message);
                 return false;
             }
             if (isNaN(income) || income <= 0) {
                 patrimonialDataForDisplay = { calculatedSuccessfully: false, message: "Por favor, ingresa un ingreso mensual válido."};
-                // Consider using a custom modal/message box instead of alert()
-                // For example: showCustomAlert(patrimonialDataForDisplay.message);
                 console.error(patrimonialDataForDisplay.message);
                 return false; 
             }
              if (age <= 26.5) { 
                 patrimonialDataForDisplay = { calculatedSuccessfully: false, message: "La edad debe ser mayor a 26.5 para esta fórmula particular."};
-                // Consider using a custom modal/message box instead of alert()
-                // For example: showCustomAlert(patrimonialDataForDisplay.message);
                 console.error(patrimonialDataForDisplay.message);
                 return false; 
             }
@@ -1311,7 +1428,6 @@
         }
         
         function getBarColorForPercentage(percentage) {
-            // This function now directly returns the hex color string.
             if (percentage <= 20) return '#EF4444'; 
             if (percentage <= 40) return '#F97316'; 
             if (percentage <= 60) return '#EAB308'; 
@@ -1329,7 +1445,7 @@
 
                 const colorSwatch = document.createElement('div');
                 colorSwatch.classList.add('legend-color-swatch');
-                colorSwatch.style.backgroundColor = level.barColor; // barColor in resultsLevels now stores the direct hex
+                colorSwatch.style.backgroundColor = level.barColor;
                 legendItemDiv.appendChild(colorSwatch);
 
                 const levelText = document.createElement('span');
@@ -1541,37 +1657,53 @@
             let allAnswered = true;
             let missingFieldName = "";
 
-            personalDataQuestions.forEach(pdQuestion => { 
-                if (pdQuestion.type === 'text') {
-                    const inputEl = document.getElementById(pdQuestion.id);
-                    if (inputEl && inputEl.value.trim() === '' && pdQuestion.id !== 'nombre') { 
-                       allAnswered = false; 
-                       if (!missingFieldName) missingFieldName = pdQuestion.question;
-                    } else if (inputEl) {
-                         currentPersonalData[pdQuestion.id] = inputEl.value.trim();
+            for (const pdQuestion of personalDataQuestions) {
+                // if (pdQuestion.id === 'nombre') continue; // Removed to make name mandatory
+
+                let isAnswered = false;
+                if (pdQuestion.type === 'text' || pdQuestion.type === 'number') {
+                    if (currentPersonalData[pdQuestion.id] && currentPersonalData[pdQuestion.id].trim() !== '') {
+                        isAnswered = true;
                     }
                 } else if (pdQuestion.type === 'radio') {
-                    if (currentPersonalData[pdQuestion.id] === undefined) {
-                        allAnswered = false;
-                        if (!missingFieldName) missingFieldName = pdQuestion.question;
+                    if (currentPersonalData[pdQuestion.id] !== undefined) {
+                        isAnswered = true;
+                        if (currentPersonalData[pdQuestion.id].includes('(especificar)')) {
+                            const specifyKey = `${pdQuestion.id}_specify`;
+                            if (!currentPersonalData[specifyKey] || currentPersonalData[specifyKey].trim() === '') {
+                                isAnswered = false; 
+                                missingFieldName = `Por favor, completa el campo para "${pdQuestion.question}"`;
+                            }
+                        }
                     }
                 }
-            });
-            if (!allAnswered && missingFieldName) {
-                // Consider using a custom modal/message box instead of alert()
-                // For example: showCustomAlert(`Por favor, responde la pregunta: "${missingFieldName}"`);
-                console.error(`Por favor, responde la pregunta: "${missingFieldName}"`);
-            } else if (!allAnswered) {
-                // Consider using a custom modal/message box instead of alert()
-                // For example: showCustomAlert("Por favor, responde todas las preguntas de datos personales, excepto el nombre que es opcional.");
-                console.error("Por favor, responde todas las preguntas de datos personales, excepto el nombre que es opcional.");
+
+                if (!isAnswered) {
+                    allAnswered = false;
+                    if (!missingFieldName) {
+                         missingFieldName = `Por favor, responde la pregunta: "${pdQuestion.question}"`;
+                    }
+                    break; 
+                }
+            }
+
+            if (!allAnswered) {
+                if(personalDataErrorEl) {
+                    personalDataErrorEl.textContent = missingFieldName;
+                    personalDataErrorEl.classList.remove('hidden');
+                }
+                console.error(missingFieldName);
+            } else {
+                 if(personalDataErrorEl) {
+                    personalDataErrorEl.classList.add('hidden');
+                    personalDataErrorEl.textContent = '';
+                 }
             }
             return allAnswered;
         }
 
         function downloadResultsPDF() {
             if (typeof window.jspdf === 'undefined' || typeof window.jspdf.jsPDF === 'undefined') {
-                console.error("Error: La biblioteca para generar PDF no está cargada. No se puede descargar el PDF.");
                 console.error("jsPDF library is not loaded.");
                 return;
             }
@@ -1587,27 +1719,22 @@
             const maxLineWidth = pageWidth - margin * 2;
             const logoHeight = 15; 
             const logoWidth = (logoHeight * 320) / 132; 
-            let currentPage = 1;
-            let totalPages = 1; 
             let yPos; 
 
-            function addHeader(doc, pageNum, totalPagesNum) {
+            function addHeader(doc) {
                 try {
-                    if (logoBase64 && logoBase64 !== "PLACEHOLDER_FOR_BASE64_LOGO_STRING" && logoBase64.startsWith("data:image")) {
+                    if (logoBase64 && logoBase64.startsWith("data:image")) {
                         doc.addImage(logoBase64, 'PNG', margin, 5, logoWidth, logoHeight); 
                     } else {
-                        console.warn("Logo Base64 string is a placeholder or invalid. Displaying fallback text.");
                         doc.setFontSize(8).text("Logo no disponible", margin, 10);
                     }
                 } catch (e) {
                     console.error("Error adding logo to PDF:", e);
                     doc.setFontSize(8).text("Logo no disponible", margin, 10); 
                 }
-                // Remove page number text
-                // doc.setFontSize(8).text(`Página ${pageNum} de ${totalPagesNum}`, pageWidth - margin, 10, { align: 'right' });
             }
 
-            function addFooter(doc, pageNum, totalPagesNum) {
+            function addFooter(doc) {
                 const footerY = pageHeight - 25;
                 doc.setLineWidth(0.2);
                 doc.line(margin, footerY - 2, pageWidth - margin, footerY - 2); 
@@ -1616,21 +1743,23 @@
                 doc.text("Alan Villegas - Asesor Financiero y de Seguros", margin, footerY + 2);
                 doc.text("alan@arvfinplanner.com.mx", margin, footerY + 2 + lineSpacing * 0.6);
                 doc.text("5520322677 | linktr.ee/arvfinplanner", margin, footerY + 2 + lineSpacing * 1.2);
+                
+                const pageNumText = `Página ${doc.internal.getCurrentPageInfo().pageNumber} de ${doc.internal.getNumberOfPages()}`;
+                doc.text(pageNumText, pageWidth - margin, footerY + 2, { align: 'right' });
                 doc.setTextColor(0); 
             }
             
             function checkPageBreak(currentY, requiredSpace) {
                 if (currentY + requiredSpace > pageHeight - 30) { 
-                    addFooter(doc, currentPage, "TP"); 
+                    addFooter(doc); 
                     doc.addPage();
-                    currentPage++;
-                    addHeader(doc, currentPage, "TP"); 
+                    addHeader(doc); 
                     return logoHeight + 15; 
                 }
                 return currentY;
             }
             
-            addHeader(doc, currentPage, "TP"); 
+            addHeader(doc); 
             yPos = logoHeight + 20; 
 
             const titleFont = 'Helvetica'; 
@@ -1642,6 +1771,7 @@
             doc.text(`Resultados del Test de Finanzas Personales${userNameForPDF}`, pageWidth / 2, yPos, { align: 'center' });
             yPos += sectionSpacing * 1.5;
 
+            // --- Results Section ---
             const columnWidth = (maxLineWidth - 10) / 2; 
             const leftColumnX = margin;
             const rightColumnX = margin + columnWidth + 10;
@@ -1661,28 +1791,17 @@
                 yPosLeft = checkPageBreak(yPosLeft, 12); 
                 const percentage = sectionScores[section.title] !== undefined ? sectionScores[section.title] : 0;
                 const barColorHex = getBarColorForPercentage(percentage);
-                
                 const barHeight = 5; 
                 const textYOffset = barHeight / 2 + 1.5; 
-
                 doc.setFont(textFont, 'normal').setFontSize(9);
                 doc.text(section.title, leftColumnX, yPosLeft + textYOffset); 
-                
                 const barX = leftColumnX + 40; 
                 const barW = columnWidth - 55;  
                 const filledBarW = (barW * percentage) / 100;
-
                 doc.setFillColor(226, 232, 240); 
                 doc.rect(barX, yPosLeft, barW, barHeight, 'F'); 
-                
-                if (typeof barColorHex === 'string' && barColorHex.startsWith('#')) {
-                    doc.setFillColor(barColorHex); 
-                } else {
-                    doc.setFillColor("#cccccc"); 
-                    console.warn("Invalid barColorHex:", barColorHex, "for section:", section.title);
-                }
+                doc.setFillColor(barColorHex); 
                 doc.rect(barX, yPosLeft, filledBarW, barHeight, 'F');
-                
                 doc.setFontSize(8).setTextColor(50,50,50);
                 doc.text(`${percentage.toFixed(0)}%`, barX + barW + 3, yPosLeft + textYOffset); 
                 yPosLeft += 12; 
@@ -1693,17 +1812,9 @@
             doc.setTextColor(74, 85, 104); 
             doc.text("Tu resultado general es:", rightColumnX + columnWidth / 2, yPosRight, { align: 'center' });
             yPosRight += 8;
-
             const overallPercentage = parseFloat(scorePercentageEl.textContent);
             const overallLevelColorHex = getBarColorForPercentage(overallPercentage);
-            
-            if (typeof overallLevelColorHex === 'string' && overallLevelColorHex.startsWith('#')) {
-                 doc.setFillColor(overallLevelColorHex);
-            } else {
-                doc.setFillColor("#cccccc"); 
-                console.warn("Invalid overallLevelColorHex:", overallLevelColorHex);
-            }
-            
+            doc.setFillColor(overallLevelColorHex);
             const boxSize = 20;
             doc.rect(rightColumnX + columnWidth/2 - boxSize/2, yPosRight, boxSize, boxSize, 'F');
             doc.setFont(titleFont, 'bold').setFontSize(18).setTextColor(255,255,255);
@@ -1730,8 +1841,9 @@
                 yPosRight += recText.length * (lineSpacing * 0.7);
             }
 
-            yPos = Math.max(yPosLeft, yPosRight) + sectionSpacing; 
+            yPos = Math.max(yPosLeft, yPosRight) + sectionSpacing;
 
+            // --- Patrimonial Section ---
             yPos = checkPageBreak(yPos, 60); 
             if (patrimonialDataForDisplay && patrimonialDataForDisplay.calculatedSuccessfully) { 
                 doc.setFont(titleFont, 'bold').setFontSize(12);
@@ -1739,25 +1851,20 @@
                 doc.setTextColor(255,255,255);
                 doc.rect(margin, yPos - 4, maxLineWidth, 10, 'F'); 
                 doc.text("Análisis de Objetivo Patrimonial", margin + maxLineWidth/2, yPos + 2, {align: 'center'}); 
-                
-                yPos += 18; // Increased space after purple bar title
+                yPos += 18; 
                 doc.setTextColor(0,0,0);
-
                 doc.setFont(titleFont, 'bold').setFontSize(22).setTextColor(231, 0, 76); 
                 const numeroMagicoText = patrimonialDataForDisplay.objective.split(': $')[1];
                 doc.text(numeroMagicoText, pageWidth / 2, yPos, { align: 'center' }); 
                 yPos += 8; 
-
                 doc.setFont(textFont, 'normal').setFontSize(10).setTextColor(85,85,85);
                 doc.text("Tu patrimonio mínimo recomendado es:", pageWidth / 2, yPos, { align: 'center' }); 
                 yPos += 10; 
-                
                 doc.setFont(textFont, 'normal').setFontSize(9);
                 const introText = `Basado en una edad de ${patrimonialDataForDisplay.ageUsed} años, un ingreso mensual de $${patrimonialDataForDisplay.incomeUsed.toLocaleString('es-MX', {minimumFractionDigits: 0, maximumFractionDigits: 0})} MXN y una tasa de inversión del ${(patrimonialDataForDisplay.interestRateUsed * 100).toFixed(0)}%:`;
                 const splitIntro = doc.splitTextToSize(introText, maxLineWidth);
                 doc.text(splitIntro, margin, yPos);
                 yPos += splitIntro.length * (lineSpacing * 0.7) + 2;
-                
                 if (patrimonialDataForDisplay.pureSavings) {
                     const pureSavingsPDFText = doc.splitTextToSize(patrimonialDataForDisplay.pureSavings, maxLineWidth);
                     doc.text(pureSavingsPDFText, margin, yPos);
@@ -1772,34 +1879,40 @@
                 doc.text("Nota: El cálculo patrimonial es una estimación referencial. Para una planificación más detallada, te recomendamos hablar con un asesor financiero.", margin, yPos);
                 yPos += sectionSpacing;
             }
+            
+            yPos = checkPageBreak(yPos, 20); 
 
-            yPos = checkPageBreak(yPos, 50);
-            doc.setFont(titleFont, 'bold').setFontSize(12);
-            doc.setFillColor(134, 51, 153); 
-            doc.setTextColor(255,255,255);
+            // --- Personal Data Summary ---
+            doc.setFont(titleFont, 'bold');
+            doc.setFontSize(12);
+            doc.setFillColor(134, 51, 153);
+            doc.setTextColor(255, 255, 255);
             doc.rect(margin, yPos - 4, maxLineWidth, 10, 'F');
-            doc.text("Guía de Niveles y Colores", margin + maxLineWidth/2, yPos + 2, {align: 'center'});
+            doc.text("Resumen de Datos Personales", margin + maxLineWidth / 2, yPos + 2, { align: 'center' });
             yPos += 12;
-            doc.setTextColor(0,0,0);
+            doc.setTextColor(0, 0, 0);
 
-            doc.setFont(textFont, 'normal').setFontSize(9);
-            resultsLevels.forEach(level => {
-                yPos = checkPageBreak(yPos, 10);
-                const barColorHex = level.barColor; 
-                if (typeof barColorHex === 'string' && barColorHex.startsWith('#')) {
-                    doc.setFillColor(barColorHex);
-                } else {
-                    doc.setFillColor("#cccccc"); 
-                     console.warn("Invalid barColorHex for legend:", barColorHex, "for level:", level.title);
+            doc.setFont(textFont, 'normal').setFontSize(10);
+            personalDataQuestions.forEach(pdQuestion => {
+                let answer = currentPersonalData[pdQuestion.id] || 'No respondido';
+                
+                let displayText = `${pdQuestion.question} ${answer}`;
+                
+                if (answer.includes('(especificar)')) {
+                    const specifyKey = `${pdQuestion.id}_specify`;
+                    const specifiedText = currentPersonalData[specifyKey] || "No especificado";
+                    displayText = `${pdQuestion.question} ${answer.replace('(especificar)', '')}: ${specifiedText}`;
                 }
-                doc.rect(margin, yPos, 5, 5, 'F');
-                doc.text(`${level.title} (${level.min}% - ${level.max}%)`, margin + 8, yPos + 4);
-                yPos += 8;
+
+                const splitText = doc.splitTextToSize(displayText, maxLineWidth);
+                yPos = checkPageBreak(yPos, splitText.length * (lineSpacing * 0.7));
+                doc.text(splitText, margin, yPos);
+                yPos += splitText.length * (lineSpacing * 0.7) + 2;
             });
             yPos += sectionSpacing;
 
-            yPos = checkPageBreak(yPos, 20 + sectionSpacing * 1.5); 
-
+            // --- Main Quiz Answers ---
+            yPos = checkPageBreak(yPos, 20 + sectionSpacing);
             doc.setFont(titleFont, 'bold');
             doc.setFontSize(16);
             doc.text("Resumen de Tus Respuestas", pageWidth / 2, yPos, { align: 'center' });
@@ -1833,11 +1946,11 @@
                 yPos += lineSpacing; 
             });
 
-            totalPages = doc.internal.getNumberOfPages();
+            // --- Add Footers to all pages ---
+            const totalPages = doc.internal.getNumberOfPages();
             for (let i = 1; i <= totalPages; i++) {
                 doc.setPage(i);
-                addHeader(doc, i, totalPages); 
-                addFooter(doc, i, totalPages);
+                addFooter(doc);
             }
 
             doc.save("Resultados_Test_Finanzas_Personales.pdf");
@@ -1859,7 +1972,6 @@
             goBack(); 
         });
 
-
         if(startMainQuizBtn) startMainQuizBtn.addEventListener('click', () => {
             if (collectPersonalData()) {
                 currentSectionIndex = 0;
@@ -1869,7 +1981,9 @@
                 patrimonialDataForDisplay = null; 
                 loadSection(); 
                 showScreen(quizScreen);
-            } 
+            } else {
+                 if(personalDataErrorEl) scrollToTop(personalDataErrorEl);
+            }
         });
 
         if(nextSectionBtn) nextSectionBtn.addEventListener('click', handleNextSection); 
@@ -1923,4 +2037,4 @@
 
     </script>
 </body>
-</ht
+</html>
