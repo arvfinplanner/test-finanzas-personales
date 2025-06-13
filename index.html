@@ -478,7 +478,7 @@
     <div id="quizApp" class="quiz-container">
         <!-- Pantalla Inicial -->
         <div id="initialScreen">
-            <img id="testLogo" src="https://img1.wsimg.com/isteam/ip/5a112341-ad0f-4890-9c15-42df6c8fd70f/LOGO%20ARV.png/:/rs=h:175,m" alt="Icono del test de finanzas" class="mx-auto mb-6 h-20 w-auto">
+            <img id="testLogo" src="https://img1.wsimg.com/isteam/ip/5a112341-ad0f-4890-9c15-42df6c8fd70f/blob-af7fe96.png/:/rs=h:175,m" alt="Icono del test de finanzas" class="mx-auto mb-6 h-20 w-auto">
             <h1 class="text-4xl font-league-spartan-black text-center mb-6">¡Evalúa tu Salud Financiera Hoy!</h1>
             <p class="text-lg text-center mb-8 leading-relaxed" style="font-family: var(--font-text);">Este test rápido y sencillo te dará una visión clara de tu situación financiera actual. ¡No necesitas ser un experto, solo responder con honestidad!</p>
             <button id="startQuizBtn" class="btn btn-primary w-full sm:w-auto mx-auto block text-lg">¡Empezar el Test!</button>
@@ -1922,21 +1922,48 @@
         async function downloadResultsPDF() {
             if (typeof window.jspdf === 'undefined' || typeof window.jspdf.jsPDF === 'undefined') {
                 console.error("jsPDF library is not loaded.");
-                alert("La librería para generar PDF no está cargada. Por favor, recarga la página.");
                 return;
             }
 
             if(loadingTextEl) loadingTextEl.textContent = "Preparando PDF...";
             showScreen(loadingScreenEl);
 
-            // --- CÓDIGO MODIFICADO ---
-            // Se reemplaza la carga de imagen por la cadena Base64 para evitar errores de CORS.
-            const logoDataUrl = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAH0CAYAAADL1t+KAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAEmmlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSfvu78nIGlkPSdXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQnPz4KPHg6eG1wbWV0YSB4bWxuczp4PSdhZG9iZTpuczptZXRhLyc+CjxyZGY6UkRGIHhtbG5zOnJkZj0naHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyc+CgogPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9JycKICB4bWxuczpBdHRyaWI9J2h0dHA6Ly9ucy5hdHRyaWJ1dGlvbi5jb20vYWRzLzEuMC8nPgogIDxBdHRyaWI6QWRzPgogICA8cmRmOlNlcT4KICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0nUmVzb3VyY2UnPgogICAgIDxBdHRyaWI6Q3JlYXRlZD4yMDI1LTAyLTAyPC9BdHRyaWI6Q3JlYXRlZD4KICAgICA8QXR0cmliOkV4dElkPmEyZGZkNjZjLWRkODQtNDlhNC04MGJjLTM4NjcwZTlkMjk0MDwvQXR0cmliOkV4dElkPgogICAgIDxBdHRyaWI6RmJJZD41MjUyNjU5MTQxNzk1ODA8L0F0dHJpYjpGYklkPgogICAgIDxBdHRyaWI6VG91Y2hUeXBlPjI8L0F0dHJpYjpUb3VjaFR5cGU+CiAgICA8L3JkZjpsaT4KICAgPC9yZGY6U2VxPgogIDwvQXR0cmliOkFkcz4KIDwvcmRmOkRlc2NyaXB0aW9uPgoKIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PScnCiAgeG1sbnM6ZGM9J2h0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvJz4KICA8ZGM6dGl0bGU+CiAgIDxyZGY6QWx0PgogICAgPHJkZjpsaSB4bWw6bGFuZz0neC1kZWZhdWx0Jz5MT0dPIEFSViAtIDE8L3JkZjpsaT4KICAgPC9yZGY6QWx0PgogIDwvZGM6dGl0bGU+CiA8L3JkZjpEZXNjcmlwdGlvbj4KCiA8cmRmOkRlc2NyaXB0aW9uIHJkZjph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';
+            const getLogoData = () => {
+                return new Promise((resolve, reject) => {
+                    const img = new Image();
+                    const logoElement = document.getElementById('testLogo');
+                    if (!logoElement) {
+                        return reject(new Error('Elemento del logo no encontrado'));
+                    }
+                    
+                    const originalSrc = logoElement.src.split('/:')[0];
 
-            // --- FIN DEL CÓDIGO MODIFICADO ---
+                    img.crossOrigin = "Anonymous";
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        canvas.width = img.naturalWidth;
+                        canvas.height = img.naturalHeight;
+                        const ctx = canvas.getContext('2d');
+                        
+                        ctx.drawImage(img, 0, 0);
+                        
+                        // Dado que el logo ya tiene fondo blanco, podemos exportar como PNG para mantener calidad.
+                        const dataUrl = canvas.toDataURL('image/png');
+                        
+                        resolve({
+                            dataUrl: dataUrl,
+                            width: img.naturalWidth,
+                            height: img.naturalHeight
+                        });
+                    };
+                    img.onerror = (err) => reject(new Error('No se pudo cargar la imagen del logo desde la URL. Error: ' + err));
+                    img.src = originalSrc;
+                });
+            };
 
             try {
-                const { jsPDF } = window.jspdf;
+                const logoInfo = await getLogoData();
+                const { jsPDF } = window.jspdf; 
                 const doc = new jsPDF();
                 
                 const lineSpacing = 7;
@@ -1944,21 +1971,19 @@
                 const paragraphSpacing = 4;
                 const margin = 15;
                 const maxLineWidth = doc.internal.pageSize.getWidth() - margin * 2;
-                const logoHeight = 12;
-                const tempImg = new Image();
-                tempImg.src = logoDataUrl;
-                const logoWidth = (logoHeight * tempImg.width) / tempImg.height;
+                const logoHeight = 15; 
+                const logoWidth = (logoHeight * logoInfo.width) / logoInfo.height;
                 let yPos;
 
-                const addHeaderAndFooter = (logoImgData) => {
+                const addHeaderAndFooter = (logoDataUrl, width, height) => {
                     const totalPages = doc.internal.getNumberOfPages();
                     for (let i = 1; i <= totalPages; i++) {
                         doc.setPage(i);
                         const pageHeight = doc.internal.pageSize.getHeight();
                         // Header
                         try {
-                            if (logoImgData) {
-                                doc.addImage(logoImgData, 'PNG', margin, 10, logoWidth, logoHeight);
+                            if (logoDataUrl) {
+                                doc.addImage(logoDataUrl, 'PNG', margin, 10, width, height);
                             }
                         } catch (e) {
                             console.error("Error al agregar el logo al PDF:", e);
@@ -2228,16 +2253,18 @@
                 });
 
                 // --- Agregar Encabezados y Pies de Página a todas las páginas ---
-                addHeaderAndFooter(logoDataUrl);
+                addHeaderAndFooter(logoInfo.dataUrl, logoWidth, logoHeight);
 
                 doc.save("Resultados_Test_Finanzas_Personales.pdf");
 
             } catch (error) {
                 console.error("No se pudo generar el PDF:", error);
-                alert("Hubo un error al generar el PDF. Por favor, revisa la consola para más detalles.");
+                // Informar al usuario del error
+                alert("No se pudo generar el PDF porque no se pudo cargar el logo. Por favor, intenta de nuevo o revisa la consola para más detalles.");
             } finally {
+                // Ocultar indicador de carga
                 if(loadingTextEl) loadingTextEl.textContent = "Generando reporte...";
-                showScreen(resultsScreen, true);
+                showScreen(resultsScreen, true); // Vuelve a la pantalla de resultados
             }
         }
 
